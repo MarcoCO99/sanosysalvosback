@@ -9,5 +9,10 @@ import java.util.List;
 @Repository
 public interface PetRepository extends JpaRepository<Pet, UUID> {
 
+<<<<<<< Updated upstream
     List<Pet> findByUserUid(String userUid);
 }
+=======
+    List<Pet> findByUserUid(UUID userUid);
+}
+>>>>>>> Stashed changes
