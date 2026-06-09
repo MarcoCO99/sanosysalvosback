@@ -15,8 +15,13 @@ public class Pet {
     @Column(columnDefinition = "UUID", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "user_uid", nullable = false)
+<<<<<<< Updated upstream
+   @Column(name = "user_id") // Forzamos a que apunte a la columna real de la DB
     private String userUid;
+=======
+    @Column(name = "user_id", nullable = false)  // ← Agregar nullable = false si es obligatorio
+    private UUID userUid;  // ← CAMBIADO: de String a UUID
+>>>>>>> Stashed changes
 
     @Column(nullable = false)
     private String nombre;
