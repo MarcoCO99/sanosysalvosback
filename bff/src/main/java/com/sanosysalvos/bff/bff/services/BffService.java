@@ -26,16 +26,10 @@ public class BffService {
     @Value("${ms.pets.url}")
     private String msPetsUrl;
 
-<<<<<<< Updated upstream
-    // -------------------------------------------------------
-    // PERFIL: combina usuario + sus mascotas en una sola respuesta
-    // -------------------------------------------------------
-=======
     @Value("${ms.notification.url}")
     private String msNotificationUrl;
 
     // --- 1. PERFIL ---
->>>>>>> Stashed changes
     public PerfilResponse getPerfil(String firebaseUid) {
         // 1. Llama a ms-users para obtener el usuario
         Map<String, Object> usuario = restTemplate.getForObject(
@@ -67,23 +61,6 @@ public class BffService {
         return perfil;
     }
 
-<<<<<<< Updated upstream
-    // -------------------------------------------------------
-    // EXPLORAR: lista todas las mascotas (para la página de explorar)
-    // -------------------------------------------------------
-    public List<Map<String, Object>> getMascotasParaExplorar() {
-        return restTemplate.exchange(
-                msPetsUrl + "/api/pets",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<Map<String, Object>>>() {}
-        ).getBody();
-    }
-
-    // -------------------------------------------------------
-    // REPORTAR: recibe datos del frontend y los envía a ms-pets
-    // -------------------------------------------------------
-=======
     // --- 2. EXPLORAR ---
     public List<Map<String, Object>> getMascotasParaExplorar(boolean recientes) {
         String url = msPetsUrl + "/api/pets?recientes=" + recientes;
@@ -98,7 +75,6 @@ public class BffService {
     }
 
     // --- 4. REPORTAR (CORREGIDO: CONVIERTE user_id a UUID) ---
->>>>>>> Stashed changes
     public ResponseEntity<Map> reportarMascota(Map<String, Object> datosMascota) {
         // 🔥 CONVERTIR user_id de String a UUID si existe
         if (datosMascota.containsKey("user_id")) {
@@ -155,8 +131,6 @@ public class BffService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(datosUsuario, headers);
-<<<<<<< Updated upstream
-=======
         String url = msUsersUrl + "/api/users/firebase/" + userId;
         return restTemplate.exchange(url, HttpMethod.PUT, request, Map.class);
     }
@@ -171,7 +145,6 @@ public class BffService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(datosMascota, headers);
->>>>>>> Stashed changes
         return restTemplate.exchange(
                 msUsersUrl + "/api/users/" + userId,
                 HttpMethod.PUT,
@@ -179,9 +152,6 @@ public class BffService {
                 Map.class
         );
     }
-<<<<<<< Updated upstream
-}
-=======
 
     // --- 9. BUSCAR DUEÑO POR UID ---
     public Map<String, Object> getUsuarioPorId(String uid) {
@@ -239,4 +209,3 @@ public class BffService {
         }
     }
 }
->>>>>>> Stashed changes

@@ -12,9 +12,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-<<<<<<< Updated upstream
-@CrossOrigin(origins = "*")
-=======
 @CrossOrigin(
     origins = "https://localhost:3000",
     methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, 
@@ -22,7 +19,6 @@ import java.util.Map;
     allowedHeaders = "*",
     allowCredentials = "true"  // ← si usas cookies/sessions
 )
->>>>>>> Stashed changes
 public class BffController {
     @Autowired
     private BffService bffService;
@@ -33,14 +29,6 @@ public class BffController {
         PerfilResponse perfil = bffService.getPerfil(firebaseUid);
         return ResponseEntity.ok(perfil);
     }
-<<<<<<< Updated upstream
-
-    // GET /API/EXPLORAR
-    @GetMapping("/explorar")
-    public ResponseEntity<List<Map<String, Object>>> explorar() {
-        List<Map<String, Object>> mascotas = bffService.getMascotasParaExplorar();
-        return ResponseEntity.ok(mascotas);
-=======
 @GetMapping("/usuarios/firebase/{firebaseUid}")
 public ResponseEntity<Map<String, Object>> getDatosDueño(@PathVariable String firebaseUid) {
     Map<String, Object> usuario = bffService.getUsuarioPorId(firebaseUid);
@@ -83,7 +71,6 @@ public ResponseEntity<List<Map<String, Object>>> explorar(
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
->>>>>>> Stashed changes
     }
 
     // POST /API/REPORTAR

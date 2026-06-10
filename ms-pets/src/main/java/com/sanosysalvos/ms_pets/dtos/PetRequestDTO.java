@@ -42,10 +42,6 @@ public class PetRequestDTO {
     @NotNull(message = "La longitud es obligatoria para ubicar el reporte en el mapa.")
     private Double longitud;
 
-<<<<<<< Updated upstream
-    private String foto; // URL opcional al principio, o por si se sube directo a Firebase Storage
-=======
     private String direccionFormateada; 
     private String foto; 
->>>>>>> Stashed changes
 }

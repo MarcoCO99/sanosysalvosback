@@ -68,14 +68,9 @@ public class PetService {
     }
 
     @Transactional(readOnly = true)
-<<<<<<< Updated upstream
-    public List<PetResponseDTO> obtenerPorUsuario(String userUid) {
-        return petRepository.findByUserUid(userUid).stream()
-=======
     public List<PetResponseDTO> obtenerPorUsuario(String firebaseUid) {
     UUID userId = userClient.getUuidByFirebaseUid(firebaseUid);
     return petRepository.findByUserUid(userId).stream()
->>>>>>> Stashed changes
                 .map(petMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
