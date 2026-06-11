@@ -1,24 +1,8 @@
 version: '3.8'
 
 services:
-<<<<<<< Updated upstream
-  ms-users:
-    build: ./ms-users
-    container_name: ms-users
-    ports:
-      - "${PORT_USERS}:${PORT_USERS}"
-    environment:
-      - SERVER_PORT=${PORT_USERS}
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://${AWS_DB_ENDPOINT}:5432/${DB_NAME}
-      - SPRING_DATASOURCE_USERNAME=${DB_USER}
-      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
-    deploy:
-      resources:
-        limits:
-          memory: 350M # Evita que el micro colapse la RAM de la EC2
-=======
   sanos-db:
-    image: postgis/postgis:15-3.4 # ← cambio clave
+    image: postgis/postgis:15-3.4
     container_name: sanos-db
     restart: unless-stopped
     ports:
@@ -52,26 +36,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://sanos-db:5432/${DB_NAME}
       - SPRING_DATASOURCE_USERNAME=${DB_USER}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
->>>>>>> Stashed changes
     networks:
       - sanos-network
 
   ms-pets:
     build: ./ms-pets
     container_name: ms-pets
-<<<<<<< Updated upstream
-    ports:
-      - "${PORT_PETS}:${PORT_PETS}"
-    environment:
-      - SERVER_PORT=${PORT_PETS}
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://${AWS_DB_ENDPOINT}:5432/${DB_NAME}
-      - SPRING_DATASOURCE_USERNAME=${DB_USER}
-      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
-    deploy:
-      resources:
-        limits:
-          memory: 350M
-=======
     restart: always
     ports:
       - "${PORT_PETS}:${PORT_PETS}"
@@ -124,32 +94,23 @@ services:
     ports:
       - "${PORT_MATCHING}:${PORT_MATCHING}"
     depends_on:
-      sanos-db:
-        condition: service_healthy
       ms-sightings:
         condition: service_started
       ms-pets:
         condition: service_started
     environment:
       - SERVER_PORT=${PORT_MATCHING}
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://sanos-db:5432/${DB_NAME}
-      - SPRING_DATASOURCE_USERNAME=${DB_USER}
-      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
       - MS_PETS_URL=http://ms-pets:${PORT_PETS}
       - MS_SIGHTINGS_URL=http://ms-sightings:${PORT_SIGHTINGS}
       - MS_NOTIFICATION_URL=http://ms-notification:8083
       - MS_USERS_URL=http://ms-users:${PORT_USERS}
->>>>>>> Stashed changes
     networks:
       - sanos-network
 
   bff:
     build: ./bff
     container_name: bff
-<<<<<<< Updated upstream
-=======
     restart: always
->>>>>>> Stashed changes
     ports:
       - "8080:8080"
     depends_on:
@@ -164,32 +125,18 @@ services:
       ms-matching:
         condition: service_started
     environment:
-<<<<<<< Updated upstream
       - SERVER_PORT=8080
-      - USERS_SERVICE_URL=http://ms-users:${PORT_USERS}
-      - PETS_SERVICE_URL=http://ms-pets:${PORT_PETS}
-    deploy:
-      resources:
-        limits:
-          memory: 400M
-=======
-      - SERVER_PORT=80
-      - USERS_SERVICE_URL=http://ms-users:${PORT_USERS}
-      - PETS_SERVICE_URL=http://ms-pets:${PORT_PETS}
-      - NOTIFICATION_SERVICE_URL=http://ms-notification:8083
-      - SIGHTINGS_SERVICE_URL=http://ms-sightings:${PORT_SIGHTINGS}
-      - MATCHING_SERVICE_URL=http://ms-matching:${PORT_MATCHING}
->>>>>>> Stashed changes
+      - MS_USERS_URL=http://ms-users:${PORT_USERS}
+      - MS_PETS_URL=http://ms-pets:${PORT_PETS}
+      - MS_NOTIFICATION_URL=http://ms-notification:8083
+      - MS_SIGHTINGS_URL=http://ms-sightings:${PORT_SIGHTINGS}
+      - MS_MATCHING_URL=http://ms-matching:${PORT_MATCHING}
     networks:
       - sanos-network
 
 networks:
   sanos-network:
-<<<<<<< Updated upstream
-    driver: bridge
-=======
     driver: bridge
 
 volumes:
   pgdata:
->>>>>>> Stashed changes
